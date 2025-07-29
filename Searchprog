@@ -1,0 +1,16 @@
+import re 
+import urllib.request, urllib.parse, urllib.error
+from bs4 import BeautifulSoup
+
+file = urllib.request.urlopen("https://www.dr-chuck.com/").read()
+puos = BeautifulSoup(file, "html.parser")
+
+x = puos("a")
+string = ""
+for b in x: 
+    string =  string + b.get("href", None)
+    
+youtube_links = re.findall(r'https?://www\.youtube\.com.*?(?=https?://|$)', string)
+
+for i in youtube_links:
+    print(f"{i}\n")
